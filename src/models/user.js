@@ -14,19 +14,18 @@ module.exports = (sequelize, DataTypes) => {
       User.belongsTo(models.Group);
       User.belongsToMany(models.Project, { through: 'Project_User' });
     }
-  }
-};
-User.init({
-  email: DataTypes.STRING,
-  password: DataTypes.STRING,
-  username: DataTypes.STRING,
-  address: DataTypes.STRING,
-  sex: DataTypes.STRING,
-  phone: DataTypes.STRING,
-  groupId: DataTypes.INTEGER
-}, {
-  sequelize,
-  modelName: 'User',
-});
-return User;
+  };
+  User.init({
+    email: DataTypes.STRING,
+    password: DataTypes.STRING,
+    username: DataTypes.STRING,
+    address: DataTypes.STRING,
+    sex: DataTypes.STRING,
+    phone: DataTypes.STRING,
+    groupId: DataTypes.INTEGER
+  }, {
+    sequelize,
+    modelName: 'User',
+  });
+  return User;
 };
