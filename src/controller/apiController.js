@@ -1,4 +1,4 @@
-import { registerNewUser } from "../service/loginRegisterService";
+import { registerNewUser, handleUserLogin } from "../service/loginRegisterService";
 
 const handleRegister = async (req, res) => {
     try {
@@ -35,6 +35,24 @@ const handleRegister = async (req, res) => {
     }
 }
 
+const handleLogin = async (req, res) => {
+    try {
+        let data = await handleUserLogin(req.body);
+        return res.status(200).json({
+            EM: data.EM,
+            EC: data.EC,
+            DT: data.DT,
+        });
+    } catch (e) {
+        return res.status(500).json({
+            EM: 'error',
+            EC: '-1',
+            DT: '',
+        })
+    }
+}
+
 module.exports = {
-    handleRegister
+    handleRegister,
+    handleLogin
 }
