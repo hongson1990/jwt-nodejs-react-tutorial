@@ -35,6 +35,36 @@ const getAllUser = async () => {
     }
 }
 
+const getUserWithPagination = async (page, limit) => {
+    try {
+        let offset = (page - 1) * limit;
+        const { count, rows } = await db.User.findAndCountAll({
+            offset: offset,
+            limit: limit,
+        });
+        let totalPage = Math.ceil(count / limit);
+        let data = {
+            totalRows: count,
+            totalPage: totalPage,
+            users: rows
+        }
+
+        return {
+            EM: 'fetch Ok',
+            EC: 0,
+            DT: data,
+        }
+    } catch (e) {
+        console.log(e);
+        return {
+            EM: 'something wrong with servies',
+            EC: 1,
+            DT: [],
+        }
+
+    }
+}
+
 const createNewUser = async (data) => {
     try {
         await db.User.create({
@@ -93,5 +123,6 @@ module.exports = {
     getAllUser,
     updateUser,
     deleteUser,
-    createNewUser
+    createNewUser,
+    getUserWithPagination
 }
