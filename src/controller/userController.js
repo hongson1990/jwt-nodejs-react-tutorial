@@ -65,10 +65,11 @@ const updateFunc = async (req, res) => {
 
 const deleteFunc = async (req, res) => {
     try {
+        let data = await userApiService.deleteUser(req.body.id);
         return res.status(200).json({
-            EM: 'Your password must have more than 3 letters',
-            EC: '1',
-            DT: '',
+            EM: data.EM,
+            EC: data.EC,
+            DT: data.DT,
         });
     } catch (e) {
         console.log(e);
