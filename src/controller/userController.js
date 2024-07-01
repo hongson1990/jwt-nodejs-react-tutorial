@@ -31,10 +31,11 @@ const readFunc = async (req, res) => {
 
 const createFunc = async (req, res) => {
     try {
+        let data = await userApiService.createNewUser(req.body);
         return res.status(200).json({
-            EM: 'Your password must have more than 3 letters',
-            EC: '1',
-            DT: '',
+            EM: data.EM,
+            EC: data.EC,
+            DT: data.DT,
         });
     } catch (e) {
         console.log(e);
