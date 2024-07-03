@@ -4,6 +4,7 @@ import initWebRoutes from "./routes/web";
 import initApiRoutes from "./routes/api";
 import bodyParser from "body-parser";
 import configCors from "./config/cors"
+import { createJWT, verifyToken } from "./middleware/JWTAction";
 require('dotenv').config();
 
 const app = express();
@@ -17,6 +18,10 @@ configViewEngine(app);
 //config body-parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+//test jwt
+createJWT();
+verifyToken("");
 
 //init web routes
 initWebRoutes(app);
