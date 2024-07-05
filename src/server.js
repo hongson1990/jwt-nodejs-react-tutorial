@@ -3,7 +3,8 @@ import configViewEngine from "./config/viewEngine";
 import initWebRoutes from "./routes/web";
 import initApiRoutes from "./routes/api";
 import bodyParser from "body-parser";
-import configCors from "./config/cors"
+import configCors from "./config/cors";
+import cookieParser from 'cookie-parser';
 require('dotenv').config();
 
 const app = express();
@@ -17,6 +18,9 @@ configViewEngine(app);
 //config body-parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+
+app.use(cookieParser())
 
 
 //init web routes

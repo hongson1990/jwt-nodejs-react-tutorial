@@ -10,6 +10,7 @@ const handleCreateNewUser = async (req, res) => {
 }
 
 const handleUserPage = async (req, res) => {
+    console.log('Cookies: ', req.cookies)
     let userList = await userService.getUserList();
     return res.render("user.ejs", { userList });
 }
