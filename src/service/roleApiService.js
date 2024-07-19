@@ -10,7 +10,7 @@ const createNewRoles = async (roles) => {
         const persists = roles.filter(({ url: url1 }) => !currentRoles.some(({ url: url2 }) => url1 === url2));
         if (persists.length === 0) {
             return {
-                EM: 'Nothig to create...',
+                EM: 'Nothing to create...',
                 EC: 0,
                 DT: [],
             }
@@ -24,7 +24,50 @@ const createNewRoles = async (roles) => {
     } catch (e) {
         console.log(e);
         return {
-            EM: 'something wrong with servies',
+            EM: 'Something wrong with servies',
+            EC: 1,
+            DT: [],
+        }
+    }
+}
+
+const getAllRoles = async () => {
+    try {
+        let data = await db.Role.findAll({
+            order: [['id', 'DESC']]
+        });
+        return {
+            EM: `Get all roles succeeds`,
+            EC: 0,
+            DT: data,
+        }
+    } catch (e) {
+        console.log(e);
+        return {
+            EM: 'Something wrong with servies',
+            EC: 1,
+            DT: [],
+        }
+    }
+}
+
+const deleteRole = async (id) => {
+    try {
+        let role = await db.Role.findOne({
+            where: { id: id }
+        });
+        if (role) {
+            await role.destroy();
+        }
+        return {
+            EM: `Delete role succeeds`,
+            EC: 0,
+            DT: [],
+        }
+    } catch (e) {
+        console.log(e);
+        return {
+            EM: 'Something wrong with servies',
             EC: 1,
             DT: [],
         }
@@ -32,5 +75,7 @@ const createNewRoles = async (roles) => {
 }
 
 module.exports = {
-    createNewRoles
+    createNewRoles,
+    getAllRoles,
+    deleteRole
 }
