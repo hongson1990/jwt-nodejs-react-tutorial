@@ -33,7 +33,9 @@ const extractToken = (req) => {
 }
 
 const checkUserJWT = (req, res, next) => {
-    if (nonSecurePaths.includes(req.path) || req.path === '/account') return next();
+    if (nonSecurePaths.includes(req.path)) {
+        return next();
+    }
     let cookies = req.cookies;
     let tokenFromHeader = extractToken(req);
     if ((cookies && cookies.jwt) || tokenFromHeader) {
@@ -47,20 +49,22 @@ const checkUserJWT = (req, res, next) => {
             return res.status(401).json({
                 EC: -1,
                 DT: '',
-                EM: 'Not authenticated the user 1'
+                EM: 'Not authenticated the user'
             });
         }
     } else {
         return res.status(401).json({
             EC: -1,
             DT: '',
-            EM: 'Not authenticated the user 2'
+            EM: 'Not authenticated the user'
         });
     }
 }
 
 const checkUserPermission = (req, res, next) => {
-    if (nonSecurePaths.includes(req.path)) return next();
+    if (nonSecurePaths.includes(req.path) || req.path === '/account') {
+        return next();
+    }
     if (req.user) {
         let email = req.user.email;
         let roles = req.user.groupWithRoles.Roles;

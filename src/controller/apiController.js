@@ -39,8 +39,7 @@ const handleLogin = async (req, res) => {
     try {
         let data = await handleUserLogin(req.body);
         if (data && data.DT && data.DT.access_token) {
-            // res.cookie("jwt", data.DT.access_token, { httpOnly: true, maxAge: 60 * 60 * 1000 });
-            res.cookie("jwt", data.DT.access_token, { httpOnly: true });
+            res.cookie("jwt", data.DT.access_token, { httpOnly: true, maxAge: 60 * 60 * 1000 });
         }
         return res.status(200).json({
             EM: data.EM,
